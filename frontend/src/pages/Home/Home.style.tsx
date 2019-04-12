@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import Pokemon from 'components/Pokemon';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export default {
   PokemonsWrapper: styled.div`

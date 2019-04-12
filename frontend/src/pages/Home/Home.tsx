@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import Style from './Home.style';
 import { RouteComponentProps } from 'react-router';
+import { PokemonAction } from "redux/Pokemon";
+import Style from './Home.style';
 
 interface RouteParams {
   page: string;
@@ -16,6 +17,7 @@ interface Pokemon {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemons: Pokemon[];
+  fetchPokemonsSuccess: PokemonAction;
 }
 
 const Home = (props: Props) => {

@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-import Style from './Pokemon.style';
-import { makeGetRequest } from 'services/networking/request';
-import loader from '../../loader.svg';
 import { RouteComponentProps } from 'react-router';
+import Style from './Pokemon.style';
 
 interface RouteParams {
   id: string;

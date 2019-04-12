@@ -1,12 +1,15 @@
 import * as React from 'react';
 
-import Style from './WithDataFetching.style';
+import {PokemonType} from "redux/Pokemon/types";
 import loader from '../../loader.svg';
+import Style from './WithDataFetching.style';
+import { PokemonAction } from "redux/Pokemon";
 
 const WithDataFetching = <P extends object>(
   dataName: string,
   fetchFunction: (props: P) => any,
   shouldCallEffect: (props: P) => any[],
+  successFunction?: (props: P, data: PokemonType[]) => PokemonAction,
 ) => (BaseComponent: React.ComponentType<P>) => (props: P) => {
   const [data, setData] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -17,8 +20,12 @@ const WithDataFetching = <P extends object>(
       const fetchData = async () => {
         setLoading(true);
         try {
-          const { body } = await fetchFunction(props);
-          setData(body);
+          const {body} = await fetchFunction(props);
+          if (successFunction) {
+            successFunction(props, body)
+          } else {
+            setData(body);
+          }
         } catch (error) {
           setError(error.toString());
         }
@@ -37,7 +44,7 @@ const WithDataFetching = <P extends object>(
   return (
     <React.Fragment>
       {loading ? (
-        <Style.Loader src={loader} alt="Loading..." />
+        <Style.Loader src={loader} alt="Loading..."/>
       ) : error ? (
         <Style.Error>{error}</Style.Error>
       ) : (

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Style from './Pokemon.style';
 import turnIcon from '../../turn-ico.svg';
+import Style from './Pokemon.style';
 
 interface Props {
   name: string;

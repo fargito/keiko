@@ -10,9 +10,9 @@ import { Persistor } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import Root from './components/Root';
+import { GlobalStyle } from './global-style';
 import Routes from './routes';
 import theme from './theme';
-import { GlobalStyle } from './global-style';
 
 interface Props {
   history: History;
