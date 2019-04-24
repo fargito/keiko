@@ -16,6 +16,7 @@ interface State {
     weight: number;
   }[];
   loading: boolean;
+  error: string;
 }
 
 class Home extends React.Component<Props, State> {
@@ -24,7 +25,8 @@ class Home extends React.Component<Props, State> {
     super(props)
     this.state = {
       pokemons: [],
-      loading: true
+      loading: true,
+      error: ""
     }
   }
 
@@ -36,6 +38,11 @@ class Home extends React.Component<Props, State> {
           this.setState({pokemons: JSON.parse(data['text']), loading: false});
         }
       )
+      .catch(
+        () => {
+          this.setState({error: "Unable to call poke API", loading: false})
+        }
+      )
   }
 
 
@@ -44,6 +51,7 @@ class Home extends React.Component<Props, State> {
     return (
       <Style.Intro>
         <div>Pokédex !</div>
+        <div>{this.state.error}</div>
         <div>
           {this.state.loading ? 
             "loading..." : 
