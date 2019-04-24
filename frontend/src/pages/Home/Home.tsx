@@ -15,6 +15,7 @@ interface State {
     height: number;
     weight: number;
   }[];
+  loading: boolean;
 }
 
 class Home extends React.Component<Props, State> {
@@ -22,7 +23,8 @@ class Home extends React.Component<Props, State> {
   constructor(props: object) {
     super(props)
     this.state = {
-      pokemons: []
+      pokemons: [],
+      loading: true
     }
   }
 
@@ -31,7 +33,7 @@ class Home extends React.Component<Props, State> {
     console.log("mounted")
     makeGetRequest("/pokemon").then(
         (data) => {
-          this.setState({pokemons: JSON.parse(data['text'])});
+          this.setState({pokemons: JSON.parse(data['text']), loading: false});
         }
       )
   }
@@ -43,7 +45,10 @@ class Home extends React.Component<Props, State> {
       <Style.Intro>
         <div>Pokédex !</div>
         <div>
-          {this.state.pokemons.map((value, index) => (<Pokemon name={value.name} id={value.id} height={value.height} weight={value.weight}/>))}
+          {this.state.loading ? 
+            "loading..." : 
+            this.state.pokemons.map((value, index) => (<Pokemon name={value.name} id={value.id} height={value.height} weight={value.weight}/>))
+          }
         </div>
       </Style.Intro>
     );
