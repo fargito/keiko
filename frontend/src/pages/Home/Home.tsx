@@ -2,20 +2,49 @@ import * as React from 'react';
 
 import Pokemon from 'components/Pokemon';
 
+import {makeGetRequest} from 'services/networking/request';
+
 import Style from './Home.style';
 
-class Home extends React.Component {
-  render(): React.ReactNode {
-    const pokemon = 'Carapuce';
 
+interface Props {}
+interface State {
+  pokemons: {
+    id: number;
+    name: string;
+    height: number;
+    weight: number;
+  }[];
+}
+
+class Home extends React.Component<Props, State> {
+
+  constructor(props: object) {
+    super(props)
+    this.state = {
+      pokemons: []
+    }
+  }
+
+
+  componentDidMount() {
+    console.log("mounted")
+    makeGetRequest("/pokemon").then(
+        (data) => {
+          this.setState({pokemons: JSON.parse(data['text'])});
+        }
+      )
+  }
+
+
+
+  render(): React.ReactNode {
     return (
       <Style.Intro>
-        <div>Bienvenue sur ton futur pokédex !</div>
+        <div>Pokédex !</div>
         <div>
-          Tu vas pouvoir apprendre tout ce qu'il faut sur React, Redux et Symfony, et attraper des
-          pokemons !
+          {this.state.pokemons.map((value, index) => (<Pokemon name={value.name} id={value.id} height={value.height} weight={value.weight}/>))}
         </div>
-        <Pokemon name="Carapuce" id={7} />
       </Style.Intro>
     );
   }
