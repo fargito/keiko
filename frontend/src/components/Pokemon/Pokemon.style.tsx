@@ -16,4 +16,9 @@ export default {
     margin: 2px;
     border: 2px solid black;
   `,
+  PokemonPP: styled.img`
+    :hover {
+      cursor: pointer;
+    }
+  `,
 };

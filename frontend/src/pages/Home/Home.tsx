@@ -77,17 +77,12 @@ class Home extends React.Component<Props, State> {
             <div>{this.state.error}</div>
           ) : (
             this.state.pokemons.map((value, index) => (
-              <Link
-                to={'/pokemon/' + value.id}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                <Pokemon
-                  name={value.name}
-                  id={value.id}
-                  height={value.height}
-                  weight={value.weight}
-                />
-              </Link>
+              <Pokemon
+                name={value.name}
+                id={value.id}
+                height={value.height}
+                weight={value.weight}
+              />
             ))
           )}
         </Style.PokemonsContainer>
