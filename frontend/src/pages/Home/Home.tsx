@@ -5,6 +5,7 @@ import Pokemon from 'components/Pokemon';
 import { makeGetRequest } from 'services/networking/request';
 
 import Style from './Home.style';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 interface State {
@@ -50,12 +51,14 @@ class Home extends React.Component<Props, State> {
             <div>{this.state.error}</div>
           ) : (
             this.state.pokemons.map((value, index) => (
-              <Pokemon
-                name={value.name}
-                id={value.id}
-                height={value.height}
-                weight={value.weight}
-              />
+              <Link to={'/pokemon/' + value.id}>
+                <Pokemon
+                  name={value.name}
+                  id={value.id}
+                  height={value.height}
+                  weight={value.weight}
+                />
+              </Link>
             ))
           )}
         </div>
