@@ -50,7 +50,7 @@ class PokemonPage extends React.Component<Props> {
       <Style.Intro>
         <div>
           {this.state.loading ? (
-            <img src={process.env.PUBLIC_URL + 'loader.svg'} alt="loading..." />
+            <img src={process.env.PUBLIC_URL + '/loader.svg'} alt="loading..." />
           ) : this.state.error ? (
             <div>{this.state.error}</div>
           ) : (

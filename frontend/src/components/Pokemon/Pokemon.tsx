@@ -31,7 +31,7 @@ const Pokemon = (props: Props) => {
             <p>{props.name}</p>
           </Link>
           <Style.PokemonRotate
-            src={process.env.PUBLIC_URL + 'turn-ico.svg'}
+            src={process.env.PUBLIC_URL + '/turn-ico.svg'}
             alt="rotate"
             title="Rotate pokemon"
             onClick={() => setViewedBack(!viewedBack)}
