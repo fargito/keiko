@@ -46,7 +46,7 @@ class Home extends React.Component<Props, State> {
 
         <div>
           {this.state.loading ? (
-            'loading...'
+            <img src={process.env.PUBLIC_URL + 'loader.svg'} alt="loading..." />
           ) : this.state.error ? (
             <div>{this.state.error}</div>
           ) : (
