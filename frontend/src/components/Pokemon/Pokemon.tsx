@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import Style from './Pokemon.style';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+
+import rotateIcon from './../../assets/turn-ico.svg';
 
 // declare interface to type props
 interface Props {
@@ -12,8 +13,8 @@ interface Props {
   weight: number;
 }
 
-const api_img_url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
-const api_img_back_url =
+const apiImgUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+const apiImgBackUrl =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/';
 
 const Pokemon = (props: Props) => {
@@ -23,22 +24,18 @@ const Pokemon = (props: Props) => {
       <Style.Pokemon>
         <Style.Header>
           <p />
-          <Link
-            to={'/pokemon/' + props.id}
-            style={{ textDecoration: 'none', color: 'inherit' }}
-            title="Voir les détails"
-          >
+          <Style.PokemonDetailsLink to={`/pokemon/${props.id}`} title="Voir les détails">
             <p>{props.name}</p>
-          </Link>
+          </Style.PokemonDetailsLink>
           <Style.PokemonRotate
-            src={process.env.PUBLIC_URL + '/turn-ico.svg'}
+            src={rotateIcon}
             alt="rotate"
             title="Rotate pokemon"
             onClick={() => setViewedBack(!viewedBack)}
           />
         </Style.Header>
         <img
-          src={(viewedBack ? api_img_back_url : api_img_url) + props.id + '.png'}
+          src={(viewedBack ? apiImgBackUrl : apiImgUrl) + props.id + '.png'}
           alt={props.name + ' cool PP !!!'}
         />
         <p>Id: {props.id}</p>

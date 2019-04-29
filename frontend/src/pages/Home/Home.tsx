@@ -3,10 +3,9 @@ import * as React from 'react';
 import Pokemon from 'components/Pokemon';
 
 import { makeGetRequest } from 'services/networking/request';
+import loader from './../../assets/loader.svg';
 
 import Style from './Home.style';
-import { Link } from 'react-router-dom';
-import { async } from 'q';
 import { useState, useEffect } from 'react';
 
 interface PokemonData {
@@ -22,7 +21,7 @@ const fetchAPIPage = async (page_n: number) => {
   var pokemons = [];
   try {
     const data = await makeGetRequest('/pokemon?page=' + page_n);
-    pokemons = JSON.parse(data['text']);
+    pokemons = data.body;
   } catch (error) {
     error = 'Unable to call poke API: ' + error.toString();
   }
@@ -71,12 +70,18 @@ const Home = () => {
       </Style.Intro>
       <Style.PokemonsContainer>
         {loading ? (
-          <img src={process.env.PUBLIC_URL + '/loader.svg'} alt="loading..." />
+          <img src={loader} alt="loading..." />
         ) : error ? (
           <div>{error}</div>
         ) : (
           pokemons.map((value: PokemonData, index: number) => (
-            <Pokemon name={value.name} id={value.id} height={value.height} weight={value.weight} />
+            <Pokemon
+              key={value.id}
+              name={value.name}
+              id={value.id}
+              height={value.height}
+              weight={value.weight}
+            />
           ))
         )}
       </Style.PokemonsContainer>

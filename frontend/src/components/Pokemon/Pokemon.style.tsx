@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default {
   Header: styled.div`
@@ -22,8 +23,10 @@ export default {
     border: 2px solid black;
   `,
   PokemonRotate: styled.img`
-    :hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
+  `,
+  PokemonDetailsLink: styled(Link)`
+    text-decoration: 'none';
+    color: 'inherit';
   `,
 };
