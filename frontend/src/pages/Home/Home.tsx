@@ -32,17 +32,16 @@ class Home extends React.Component<Props, State> {
     };
   }
 
-  fetchAPIPage() {
+  fetchAPIPage = async () => {
     // requests API page and updates state
     this.setState({ loading: true });
-    makeGetRequest('/pokemon?page=' + this.state.currentPage)
-      .then(data => {
-        this.setState({ pokemons: JSON.parse(data['text']), loading: false });
-      })
-      .catch(error => {
-        this.setState({ error: 'Unable to call poke API: ' + error.toString(), loading: false });
-      });
-  }
+    try {
+      const data = await makeGetRequest('/pokemon?page=' + this.state.currentPage);
+      this.setState({ pokemons: JSON.parse(data['text']), loading: false });
+    } catch (error) {
+      this.setState({ error: 'Unable to call poke API: ' + error.toString(), loading: false });
+    }
+  };
 
   incrementPage = async (increment: number) => {
     const next_n = Math.max(this.state.currentPage + increment, 1);
