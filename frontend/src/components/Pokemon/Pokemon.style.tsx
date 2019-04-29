@@ -10,6 +10,7 @@ export default {
     margin: 1px;
     border: 2px solid black;
     text-decoration: none;
+    min-width: 250px;
   `,
   Outline: styled.div`
     margin: 2px;

@@ -6,6 +6,7 @@ import { makeGetRequest } from 'services/networking/request';
 
 import Style from './Home.style';
 import { Link } from 'react-router-dom';
+import { async } from 'q';
 
 interface Props {}
 interface State {
@@ -17,6 +18,7 @@ interface State {
   }[];
   loading: boolean;
   error: string;
+  currentPage: number;
 }
 
 class Home extends React.Component<Props, State> {
@@ -26,11 +28,14 @@ class Home extends React.Component<Props, State> {
       pokemons: [],
       loading: true,
       error: '',
+      currentPage: 1,
     };
   }
 
-  componentDidMount() {
-    makeGetRequest('/pokemon')
+  fetchAPIPage() {
+    // requests API page and updates state
+    this.setState({ loading: true });
+    makeGetRequest('/pokemon?page=' + this.state.currentPage)
       .then(data => {
         this.setState({ pokemons: JSON.parse(data['text']), loading: false });
       })
@@ -39,11 +44,34 @@ class Home extends React.Component<Props, State> {
       });
   }
 
+  incrementPage = async (increment: number) => {
+    const next_n = Math.max(this.state.currentPage + increment, 1);
+    await this.setState({ currentPage: next_n });
+    this.fetchAPIPage();
+  };
+
+  componentDidMount() {
+    this.fetchAPIPage();
+  }
+
   render(): React.ReactNode {
     return (
-      <Style.Intro>
-        <div>Pokédex !</div>
-        <div>
+      <div>
+        <Style.Intro>
+          {this.state.currentPage > 1 ? (
+            <Style.PageIterator onClick={() => this.incrementPage(-1)}>
+              {'<'} Page {this.state.currentPage - 1}
+            </Style.PageIterator>
+          ) : (
+            <p />
+          )}
+
+          <p>Pokédex !</p>
+          <Style.PageIterator onClick={() => this.incrementPage(1)}>
+            Page {this.state.currentPage + 1} {'>'}
+          </Style.PageIterator>
+        </Style.Intro>
+        <Style.PokemonsContainer>
           {this.state.loading ? (
             <img src={process.env.PUBLIC_URL + 'loader.svg'} alt="loading..." />
           ) : this.state.error ? (
@@ -63,8 +91,8 @@ class Home extends React.Component<Props, State> {
               </Link>
             ))
           )}
-        </div>
-      </Style.Intro>
+        </Style.PokemonsContainer>
+      </div>
     );
   }
 }
