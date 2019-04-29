@@ -29,13 +29,12 @@ class Home extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    console.log('mounted');
     makeGetRequest('/pokemon')
       .then(data => {
         this.setState({ pokemons: JSON.parse(data['text']), loading: false });
       })
       .catch(error => {
-        this.setState({ error: error.toString(), loading: false });
+        this.setState({ error: 'Unable to call poke API: ' + error.toString(), loading: false });
       });
   }
 
@@ -43,18 +42,22 @@ class Home extends React.Component<Props, State> {
     return (
       <Style.Intro>
         <div>Pokédex !</div>
-        <div>{this.state.error}</div>
+
         <div>
-          {this.state.loading
-            ? 'loading...'
-            : this.state.pokemons.map((value, index) => (
-                <Pokemon
-                  name={value.name}
-                  id={value.id}
-                  height={value.height}
-                  weight={value.weight}
-                />
-              ))}
+          {this.state.loading ? (
+            'loading...'
+          ) : this.state.error ? (
+            <div>{this.state.error}</div>
+          ) : (
+            this.state.pokemons.map((value, index) => (
+              <Pokemon
+                name={value.name}
+                id={value.id}
+                height={value.height}
+                weight={value.weight}
+              />
+            ))
+          )}
         </div>
       </Style.Intro>
     );
