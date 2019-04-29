@@ -21,18 +21,25 @@ const Pokemon = (props: Props) => {
   return (
     <Style.Outline>
       <Style.Pokemon>
-        <Link
-          to={'/pokemon/' + props.id}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-          title="Voir les détails"
-        >
-          <p>{props.name}</p>
-        </Link>
-        <Style.PokemonPP
+        <Style.Header>
+          <p />
+          <Link
+            to={'/pokemon/' + props.id}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+            title="Voir les détails"
+          >
+            <p>{props.name}</p>
+          </Link>
+          <Style.PokemonRotate
+            src={process.env.PUBLIC_URL + 'turn-ico.svg'}
+            alt="rotate"
+            title="Rotate pokemon"
+            onClick={() => setViewedBack(!viewedBack)}
+          />
+        </Style.Header>
+        <img
           src={(viewedBack ? api_img_back_url : api_img_url) + props.id + '.png'}
-          onClick={() => setViewedBack(!viewedBack)}
           alt={props.name + ' cool PP !!!'}
-          title="Voir de dos"
         />
         <p>Id: {props.id}</p>
         <p>Weight: {props.weight} kg</p>

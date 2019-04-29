@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 export default {
+  Header: styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  `,
   Pokemon: styled.div`
     font-size: 12px;
     display: flex;
@@ -16,7 +21,7 @@ export default {
     margin: 2px;
     border: 2px solid black;
   `,
-  PokemonPP: styled.img`
+  PokemonRotate: styled.img`
     :hover {
       cursor: pointer;
     }
