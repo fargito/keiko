@@ -7,88 +7,81 @@ import { makeGetRequest } from 'services/networking/request';
 import Style from './Home.style';
 import { Link } from 'react-router-dom';
 import { async } from 'q';
+import { useState, useEffect } from 'react';
 
-interface Props {}
-interface State {
-  pokemons: {
-    id: number;
-    name: string;
-    height: number;
-    weight: number;
-  }[];
-  loading: boolean;
-  error: string;
-  currentPage: number;
+interface PokemonData {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
 }
 
-class Home extends React.Component<Props, State> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      pokemons: [],
-      loading: true,
-      error: '',
-      currentPage: 1,
-    };
+const fetchAPIPage = async (page_n: number) => {
+  // requests API page and updates state
+  var error = '';
+  var pokemons = [];
+  try {
+    const data = await makeGetRequest('/pokemon?page=' + page_n);
+    pokemons = JSON.parse(data['text']);
+  } catch (error) {
+    error = 'Unable to call poke API: ' + error.toString();
   }
+  return { pokemons, error };
+};
 
-  fetchAPIPage = async () => {
-    // requests API page and updates state
-    this.setState({ loading: true });
-    try {
-      const data = await makeGetRequest('/pokemon?page=' + this.state.currentPage);
-      this.setState({ pokemons: JSON.parse(data['text']), loading: false });
-    } catch (error) {
-      this.setState({ error: 'Unable to call poke API: ' + error.toString(), loading: false });
-    }
-  };
+const Home = () => {
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [error, setError] = useState('');
+  const [pokemons, setPokemons] = useState<PokemonData[]>([]);
 
-  incrementPage = async (increment: number) => {
-    const next_n = Math.max(this.state.currentPage + increment, 1);
-    await this.setState({ currentPage: next_n });
-    this.fetchAPIPage();
-  };
+  useEffect(
+    () => {
+      fetchAPIPage(currentPage).then(data => {
+        setPokemons(data['pokemons']);
+        setError(data['error']);
+      });
+    },
+    [currentPage],
+  );
 
-  componentDidMount() {
-    this.fetchAPIPage();
-  }
-
-  render(): React.ReactNode {
-    return (
-      <div>
-        <Style.Intro>
-          {this.state.currentPage > 1 ? (
-            <Style.PageIterator onClick={() => this.incrementPage(-1)}>
-              {'<'} Page {this.state.currentPage - 1}
-            </Style.PageIterator>
-          ) : (
-            <p />
-          )}
-
-          <p>Pokédex !</p>
-          <Style.PageIterator onClick={() => this.incrementPage(1)}>
-            Page {this.state.currentPage + 1} {'>'}
+  return (
+    <div>
+      <Style.Intro>
+        {currentPage > 1 ? (
+          <Style.PageIterator
+            onClick={() => {
+              setCurrentPage(currentPage - 1);
+            }}
+          >
+            {'<'} Page {currentPage - 1}
           </Style.PageIterator>
-        </Style.Intro>
-        <Style.PokemonsContainer>
-          {this.state.loading ? (
-            <img src={process.env.PUBLIC_URL + 'loader.svg'} alt="loading..." />
-          ) : this.state.error ? (
-            <div>{this.state.error}</div>
-          ) : (
-            this.state.pokemons.map((value, index) => (
-              <Pokemon
-                name={value.name}
-                id={value.id}
-                height={value.height}
-                weight={value.weight}
-              />
-            ))
-          )}
-        </Style.PokemonsContainer>
-      </div>
-    );
-  }
-}
+        ) : (
+          <p />
+        )}
+
+        <p>Pokédex !</p>
+        <Style.PageIterator
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+          }}
+        >
+          Page {currentPage + 1} {'>'}
+        </Style.PageIterator>
+      </Style.Intro>
+      <Style.PokemonsContainer>
+        {loading ? (
+          <img src={process.env.PUBLIC_URL + '/loader.svg'} alt="loading..." />
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          pokemons.map((value: PokemonData, index: number) => (
+            <Pokemon name={value.name} id={value.id} height={value.height} weight={value.weight} />
+          ))
+        )}
+      </Style.PokemonsContainer>
+    </div>
+  );
+};
 
 export default Home;
