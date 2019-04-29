@@ -43,7 +43,6 @@ class Home extends React.Component<Props, State> {
     return (
       <Style.Intro>
         <div>Pokédex !</div>
-
         <div>
           {this.state.loading ? (
             <img src={process.env.PUBLIC_URL + 'loader.svg'} alt="loading..." />
@@ -51,7 +50,10 @@ class Home extends React.Component<Props, State> {
             <div>{this.state.error}</div>
           ) : (
             this.state.pokemons.map((value, index) => (
-              <Link to={'/pokemon/' + value.id}>
+              <Link
+                to={'/pokemon/' + value.id}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
                 <Pokemon
                   name={value.name}
                   id={value.id}
