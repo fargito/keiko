@@ -7,6 +7,7 @@ import loader from './../../assets/loader.svg';
 
 import Style from './Home.style';
 import { useState, useEffect } from 'react';
+import { RouteComponentProps } from 'react-router';
 
 interface PokemonData {
   id: number;
@@ -15,20 +16,13 @@ interface PokemonData {
   weight: number;
 }
 
-const fetchAPIPage = async (page_n: number) => {
-  // requests API page and updates state
-  var error = '';
-  var pokemons = [];
-  try {
-    const data = await makeGetRequest('/pokemon?page=' + page_n);
-    pokemons = data.body;
-  } catch (error) {
-    error = 'Unable to call poke API: ' + error.toString();
-  }
-  return { pokemons, error };
-};
+interface RouteParams {
+  id: string;
+}
 
-const Home = () => {
+interface Props extends RouteComponentProps<RouteParams> {}
+
+const Home = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
@@ -36,10 +30,11 @@ const Home = () => {
 
   useEffect(
     () => {
-      fetchAPIPage(currentPage).then(data => {
-        setPokemons(data['pokemons']);
-        setError(data['error']);
-      });
+      makeGetRequest('/pokemon?page=' + currentPage)
+        .then(data => {
+          setPokemons(data.body);
+        })
+        .catch(error => setError(error.toString()));
     },
     [currentPage],
   );
