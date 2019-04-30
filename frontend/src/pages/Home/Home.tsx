@@ -46,21 +46,17 @@ const Home = (props: Props) => {
     <div>
       <Style.Intro>
         {currentPage > 1 ? (
-          <Link to={`/pokedex/${currentPage - 1}`} title="Page précédente">
-            <Style.PageIterator>
-              {'<'} Page {currentPage - 1}
-            </Style.PageIterator>
-          </Link>
+          <Style.PageIterator to={`/pokedex/${currentPage - 1}`} title="Page précédente">
+            {'<'} Page {currentPage - 1}
+          </Style.PageIterator>
         ) : (
           <p />
         )}
 
         <p>Pokédex !</p>
-        <Link to={`/pokedex/${currentPage + 1}`} title="Page suivante">
-          <Style.PageIterator>
-            Page {currentPage + 1} {'>'}
-          </Style.PageIterator>
-        </Link>
+        <Style.PageIterator to={`/pokedex/${currentPage + 1}`} title="Page suivante">
+          Page {currentPage + 1} {'>'}
+        </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
         {loading ? (
