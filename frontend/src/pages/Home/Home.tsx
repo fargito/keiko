@@ -8,6 +8,7 @@ import loader from './../../assets/loader.svg';
 import Style from './Home.style';
 import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 
 interface PokemonData {
   id: number;
@@ -17,16 +18,18 @@ interface PokemonData {
 }
 
 interface RouteParams {
-  id: string;
+  page: string;
 }
 
 interface Props extends RouteComponentProps<RouteParams> {}
 
 const Home = (props: Props) => {
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState('');
   const [pokemons, setPokemons] = useState<PokemonData[]>([]);
+
+  // if no page argument is passed, display first page
+  const currentPage = parseInt(props.match.params.page) || 1;
 
   useEffect(
     () => {
@@ -43,25 +46,21 @@ const Home = (props: Props) => {
     <div>
       <Style.Intro>
         {currentPage > 1 ? (
-          <Style.PageIterator
-            onClick={() => {
-              setCurrentPage(currentPage - 1);
-            }}
-          >
-            {'<'} Page {currentPage - 1}
-          </Style.PageIterator>
+          <Link to={`/pokedex/${currentPage - 1}`} title="Page précédente">
+            <Style.PageIterator>
+              {'<'} Page {currentPage - 1}
+            </Style.PageIterator>
+          </Link>
         ) : (
           <p />
         )}
 
         <p>Pokédex !</p>
-        <Style.PageIterator
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-          }}
-        >
-          Page {currentPage + 1} {'>'}
-        </Style.PageIterator>
+        <Link to={`/pokedex/${currentPage + 1}`} title="Page suivante">
+          <Style.PageIterator>
+            Page {currentPage + 1} {'>'}
+          </Style.PageIterator>
+        </Link>
       </Style.Intro>
       <Style.PokemonsContainer>
         {loading ? (

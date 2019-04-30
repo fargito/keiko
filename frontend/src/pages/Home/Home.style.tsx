@@ -18,8 +18,6 @@ export default {
   `,
   PageIterator: styled.div`
     font-size: 10px;
-    :hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   `,
 };
