@@ -21,7 +21,8 @@
     "redux-saga": "0.16.2",
     "styled-components": "4.1.1",
     "superagent": "4.0.0",
-    "typesafe-actions": "^3.0.0"
+    "typesafe-actions": "^3.0.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "REACT_APP_ENV=local react-app-rewired start",

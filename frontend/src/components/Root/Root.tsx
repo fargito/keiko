@@ -7,6 +7,7 @@ import { flattenMessages } from 'services/i18n/intl';
 import enMessages from 'translations/en.json';
 import frMessages from 'translations/fr.json';
 import Style from './Root.style';
+import { Link } from 'react-router-dom';
 
 const locales = {
   fr: flattenMessages(frMessages),
@@ -24,10 +25,13 @@ const Root: React.FunctionComponent<Props> = ({ children }) => (
     <Style.Wrapper>
       <Style.Header>
         <Style.HeaderWrapper>
-          <Style.Logo
-            src="https://fontmeme.com/permalink/190314/03655fc9c0c5ef371245622978eaa0a7.png"
-            alt="pokemon-go-font"
-          />
+          <Link to="/">
+            {' '}
+            <Style.Logo
+              src="https://fontmeme.com/permalink/190314/03655fc9c0c5ef371245622978eaa0a7.png"
+              alt="pokemon-go-font"
+            />
+          </Link>
         </Style.HeaderWrapper>
       </Style.Header>
       {children}
