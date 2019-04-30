@@ -26,7 +26,7 @@ export default {
     cursor: pointer;
   `,
   PokemonDetailsLink: styled(Link)`
-    text-decoration: 'none';
-    color: 'inherit';
+    text-decoration: none;
+    color: inherit;
   `,
 };
