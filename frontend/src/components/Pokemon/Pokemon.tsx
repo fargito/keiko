@@ -34,10 +34,7 @@ const Pokemon = (props: Props) => {
             onClick={() => setViewedBack(!viewedBack)}
           />
         </Style.Header>
-        <img
-          src={(viewedBack ? apiImgBackUrl : apiImgUrl) + props.id + '.png'}
-          alt={props.name + ' cool PP !!!'}
-        />
+        <img src={(viewedBack ? apiImgBackUrl : apiImgUrl) + props.id + '.png'} alt={props.name} />
         <p>Id: {props.id}</p>
         <p>Weight: {props.weight} kg</p>
         <p>Height: {props.height} cm</p>
