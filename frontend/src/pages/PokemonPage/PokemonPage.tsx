@@ -51,6 +51,7 @@ class PokemonPage extends React.Component<Props> {
         <div>
           {this.state.loading ? (
             <img src={loader} alt="loading..." />
+
           ) : this.state.error ? (
             <div>{this.state.error}</div>
           ) : (

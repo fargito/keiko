@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 
+
 interface PokemonData {
   id: number;
   name: string;
@@ -47,6 +48,7 @@ const Home = (props: Props) => {
       <Style.Intro>
         {currentPage > 1 ? (
           <Style.PageIterator to={`/pokedex/${currentPage - 1}`} title="Page précédente">
+
             {'<'} Page {currentPage - 1}
           </Style.PageIterator>
         ) : (
@@ -55,12 +57,14 @@ const Home = (props: Props) => {
 
         <p>Pokédex !</p>
         <Style.PageIterator to={`/pokedex/${currentPage + 1}`} title="Page suivante">
+
           Page {currentPage + 1} {'>'}
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
         {loading ? (
           <img src={loader} alt="loading..." />
+
         ) : error ? (
           <div>{error}</div>
         ) : (
@@ -72,6 +76,7 @@ const Home = (props: Props) => {
               height={value.height}
               weight={value.weight}
             />
+
           ))
         )}
       </Style.PokemonsContainer>
