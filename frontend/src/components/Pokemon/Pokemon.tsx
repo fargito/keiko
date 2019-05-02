@@ -19,7 +19,7 @@ const apiImgBackUrl =
 const Pokemon = (props: Props) => {
   const [viewedBack, setViewedBack] = useState(false);
   return (
-    <p>
+    <div>
       {props.pokemon === undefined ? (
         <ErrorDisplayer error="pokemon is undefined" />
       ) : (
@@ -50,7 +50,7 @@ const Pokemon = (props: Props) => {
           </Style.Pokemon>
         </Style.Outline>
       )}
-    </p>
+    </div>
   );
 };
 

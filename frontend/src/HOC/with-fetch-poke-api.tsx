@@ -6,7 +6,7 @@ import ErrorDisplayer from 'components/ErrorDisplayer';
 import { pokemonType } from 'redux/Pokemons/types';
 
 export interface WithFetchAPIType {
-  fetchPokemonsSuccess: (pokemons: pokemonType[]) => any;
+  fetchPokemonsSuccess: (pokemons: []) => any;
 }
 
 // High order component logic for retrieving data from the pokeAPI
