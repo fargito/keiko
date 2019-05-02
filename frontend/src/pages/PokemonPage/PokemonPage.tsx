@@ -13,24 +13,17 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemon: PokemonData;
-  error: string;
 }
 
 const PokemonPage = (props: Props) => {
   return (
     <Style.Intro>
-      <div>
-        {props.error ? (
-          <div>{props.error}</div>
-        ) : (
-          <Pokemon
-            name={props.pokemon.name}
-            id={props.pokemon.id}
-            height={props.pokemon.height}
-            weight={props.pokemon.weight}
-          />
-        )}
-      </div>
+      <Pokemon
+        name={props.pokemon.name}
+        id={props.pokemon.id}
+        height={props.pokemon.height}
+        weight={props.pokemon.weight}
+      />
     </Style.Intro>
   );
 };

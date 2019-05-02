@@ -16,8 +16,6 @@ export interface Props extends RouteComponentProps<RouteParams> {
 }
 
 const Home = (props: Props) => {
-  const [error, setError] = useState('');
-
   // if no page argument is passed, display first page
   const currentPage = parseInt(props.match.params.page) || 1;
 
@@ -38,19 +36,15 @@ const Home = (props: Props) => {
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
-        {error ? (
-          <div>{error}</div>
-        ) : (
-          props.pokemons.map((value: PokemonData, index: number) => (
-            <Pokemon
-              key={value.id}
-              name={value.name}
-              id={value.id}
-              height={value.height}
-              weight={value.weight}
-            />
-          ))
-        )}
+        {props.pokemons.map((value: PokemonData, index: number) => (
+          <Pokemon
+            key={value.id}
+            name={value.name}
+            id={value.id}
+            height={value.height}
+            weight={value.weight}
+          />
+        ))}
       </Style.PokemonsContainer>
     </div>
   );

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { makeGetRequest } from 'services/networking/request';
 import Loader from 'components/Loader';
+import ErrorDisplayer from 'components/ErrorDisplayer';
 
 export interface PokemonData {
   id: number;
@@ -19,6 +20,7 @@ const withFetchPokeAPI = <T extends object>(
 ) => (BaseComponent: React.ComponentType<T>) => (props: T) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(
     () => {
@@ -28,11 +30,20 @@ const withFetchPokeAPI = <T extends object>(
           setData({ [dataName]: result.body });
           setLoading(false);
         })
-        .catch(error => console.log(error.toString()));
+        .catch(error => {
+          setError(error.toString());
+          setLoading(false);
+        });
     },
     [...shouldReloadEffect(props)],
   );
-  return loading ? <Loader /> : <BaseComponent {...props} {...data} />;
+  return loading ? (
+    <Loader />
+  ) : error ? (
+    <ErrorDisplayer error={error} />
+  ) : (
+    <BaseComponent {...props} {...data} />
+  );
 };
 
 export default withFetchPokeAPI;
