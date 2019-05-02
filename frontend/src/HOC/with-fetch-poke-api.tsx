@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { makeGetRequest } from 'services/networking/request';
-import loader from './../assets/loader.svg';
+import Loader from 'components/Loader';
 
 export interface PokemonData {
   id: number;
@@ -32,7 +32,7 @@ const withFetchPokeAPI = <T extends object>(
     },
     [...shouldReloadEffect(props)],
   );
-  return loading ? <img src={loader} alt="loading..." /> : <BaseComponent {...props} {...data} />;
+  return loading ? <Loader /> : <BaseComponent {...props} {...data} />;
 };
 
 export default withFetchPokeAPI;
