@@ -12,7 +12,7 @@ import { getPokemonFromState } from 'redux/Pokemons/selectors';
 
 const mapStateToProps = (state: RootState, ownProps: Props) => {
   const { id } = ownProps.match.params;
-  return { id, pokemon: getPokemonFromState(state, id) };
+  return { pokemon: getPokemonFromState(state, id) };
 };
 
 export default connect(mapStateToProps)(PokemonPage);
