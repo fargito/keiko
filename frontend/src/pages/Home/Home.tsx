@@ -13,14 +13,11 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemons: pokemonType[];
-  fetchPokemons: () => any;
 }
 
 const Home = (props: Props) => {
   // if no page argument is passed, display first page
   const currentPage = parseInt(props.match.params.page, 10) || 1;
-
-  useEffect(() => props.fetchPokemons(), []);
 
   return (
     <div>
@@ -39,13 +36,13 @@ const Home = (props: Props) => {
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
-        {props.pokemons.map((value: pokemonType) => (
+        {props.pokemons.map((pokemon: pokemonType) => (
           <Pokemon
-            key={value.id}
-            name={value.name}
-            id={value.id}
-            height={value.height}
-            weight={value.weight}
+            key={pokemon.id}
+            name={pokemon.name}
+            id={pokemon.id}
+            height={pokemon.height}
+            weight={pokemon.weight}
           />
         ))}
       </Style.PokemonsContainer>

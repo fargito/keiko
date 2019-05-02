@@ -1,11 +1,12 @@
 import Home, { Props } from './Home';
-import withFetchPokeAPI from '../../HOC/with-fetch-poke-api';
+import withFetchPokeAPI, { WithFetchAPIType } from '../../HOC/with-fetch-poke-api';
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
 import { Dispatch } from 'redux';
-import { fetchPokemonsRequest } from '../../redux/Pokemons/actions';
+import { fetchPokemonsSuccess } from '../../redux/Pokemons/actions';
+import { pokemonType } from 'redux/Pokemons/types';
 
-const HomeWithFetchPokeAPI = withFetchPokeAPI<Props>(
+const HomeWithFetchPokeAPI = withFetchPokeAPI<Props & WithFetchAPIType>(
   props => `/pokemon?page=${props.match.params.page}`,
   'pokemons',
   props => [props.match.params.page],
@@ -24,8 +25,8 @@ const mapStateToProps = (state: RootState, ownProps: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     // dispatching plain actions
-    fetchPokemons: () => {
-      dispatch(fetchPokemonsRequest({ pokemons: [] }));
+    fetchPokemonsSuccess: (pokemons: pokemonType[]) => {
+      dispatch(fetchPokemonsSuccess({ pokemons: [] }));
     },
   };
 };
@@ -33,4 +34,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(HomeWithFetchPokeAPI);

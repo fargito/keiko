@@ -3,9 +3,14 @@ import { useEffect, useState } from 'react';
 import { makeGetRequest } from 'services/networking/request';
 import Loader from 'components/Loader';
 import ErrorDisplayer from 'components/ErrorDisplayer';
+import { pokemonType } from 'redux/Pokemons/types';
+
+export interface WithFetchAPIType {
+  fetchPokemonsSuccess: (pokemons: pokemonType[]) => any;
+}
 
 // High order component logic for retrieving data from the pokeAPI
-const withFetchPokeAPI = <Props extends object>(
+const withFetchPokeAPI = <Props extends WithFetchAPIType>(
   // using functions passed by child in order to get the endpoint and the reload effect
   getEndpoint: (props: Props) => string,
   dataName: string,
@@ -22,6 +27,7 @@ const withFetchPokeAPI = <Props extends object>(
         .then(result => {
           setData({ [dataName]: result.body });
           setLoading(false);
+          props.fetchPokemonsSuccess(result.body);
         })
         .catch(error => {
           setError(error.toString());

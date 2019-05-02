@@ -3,11 +3,11 @@ import PokemonPage, { Props } from './PokemonPage';
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
 
-const PokemonPageWithPokeAPI = withFetchPokeAPI<Props>(
-  props => `/pokemon/${props.match.params.id}`,
-  'pokemon',
-  props => [props.match.params.id],
-)(PokemonPage);
+// const PokemonPageWithPokeAPI = withFetchPokeAPI<Props>(
+//   props => `/pokemon/${props.match.params.id}`,
+//   'pokemon',
+//   props => [props.match.params.id],
+// )(PokemonPage);
 
 const getPokemonFromState = (state: RootState, id: string) => {
   // temporary check that the pokemon exists in the current app state
