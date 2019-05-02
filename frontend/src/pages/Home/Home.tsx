@@ -3,16 +3,16 @@ import * as React from 'react';
 import Pokemon from 'components/Pokemon';
 
 import Style from './Home.style';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { PokemonData } from '../../HOC/with-fetch-poke-api';
+import { pokemonType } from 'redux/Pokemons/types';
 
 interface RouteParams {
   page: string;
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
-  pokemons: PokemonData[];
+  pokemons: pokemonType[];
 }
 
 const Home = (props: Props) => {
@@ -36,14 +36,8 @@ const Home = (props: Props) => {
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
-        {props.pokemons.map((value: PokemonData) => (
-          <Pokemon
-            key={value.id}
-            name={value.name}
-            id={value.id}
-            height={value.height}
-            weight={value.weight}
-          />
+        {props.pokemons.map(pokemon => (
+          <Pokemon key={pokemon.id} pokemon={pokemon} />
         ))}
       </Style.PokemonsContainer>
     </div>
