@@ -17,12 +17,7 @@ export interface Props extends RouteComponentProps<RouteParams> {
 const PokemonPage = (props: Props) => {
   return (
     <Style.Intro>
-      <Pokemon
-        name={props.pokemon.name}
-        id={props.pokemon.id}
-        height={props.pokemon.height}
-        weight={props.pokemon.weight}
-      />
+      <Pokemon pokemon={props.pokemon} />
     </Style.Intro>
   );
 };

@@ -36,14 +36,8 @@ const Home = (props: Props) => {
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
-        {props.pokemons.map((pokemon: pokemonType) => (
-          <Pokemon
-            key={pokemon.id}
-            name={pokemon.name}
-            id={pokemon.id}
-            height={pokemon.height}
-            weight={pokemon.weight}
-          />
+        {props.pokemons.map(pokemon => (
+          <Pokemon key={pokemon.id} pokemon={pokemon} />
         ))}
       </Style.PokemonsContainer>
     </div>
