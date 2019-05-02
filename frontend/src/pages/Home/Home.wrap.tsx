@@ -5,6 +5,7 @@ import { RootState } from 'redux/types';
 import { Dispatch } from 'redux';
 import { fetchPokemonsSuccess } from '../../redux/Pokemons/actions';
 import { pokemonType } from 'redux/Pokemons/types';
+import { getPokemonsListFromState } from 'redux/Pokemons/selectors';
 
 const HomeWithFetchPokeAPI = withFetchPokeAPI<Props & WithFetchAPIType>(
   props => `/pokemon?page=${props.match.params.page}`,
@@ -12,14 +13,9 @@ const HomeWithFetchPokeAPI = withFetchPokeAPI<Props & WithFetchAPIType>(
   props => [props.match.params.page],
 )(Home);
 
-const getPokemonsFromState = (state: RootState, page: string) => {
-  // for the moment, return all pokemon values in the state
-  return Object.values(state.pokemons);
-};
-
 const mapStateToProps = (state: RootState, ownProps: Props) => {
   const { page } = ownProps.match.params;
-  return { page, pokemons: getPokemonsFromState(state, page) };
+  return { page, pokemons: getPokemonsListFromState(state, page) };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
