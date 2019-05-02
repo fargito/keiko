@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { PokemonData } from '../../HOC/with-fetch-poke-api';
 
+
 interface RouteParams {
   page: string;
 }
@@ -24,6 +25,7 @@ const Home = (props: Props) => {
       <Style.Intro>
         {currentPage > 1 ? (
           <Style.PageIterator to={`/pokedex/${currentPage - 1}`} title="Page précédente">
+
             {'<'} Page {currentPage - 1}
           </Style.PageIterator>
         ) : (
@@ -32,6 +34,7 @@ const Home = (props: Props) => {
 
         <p>Pokédex !</p>
         <Style.PageIterator to={`/pokedex/${currentPage + 1}`} title="Page suivante">
+
           Page {currentPage + 1} {'>'}
         </Style.PageIterator>
       </Style.Intro>
