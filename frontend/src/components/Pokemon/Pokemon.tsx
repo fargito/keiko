@@ -3,7 +3,7 @@ import * as React from 'react';
 import Style from './Pokemon.style';
 import { useState } from 'react';
 
-import rotateIcon from './../../assets/turn-ico.svg';
+import rotateIcon from './turn-ico.svg';
 
 // declare interface to type props
 interface Props {
