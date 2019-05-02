@@ -3,6 +3,8 @@ import withFetchPokeAPI from '../../HOC/with-fetch-poke-api';
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
 import { PokemonsState } from 'redux/Pokemons';
+import { Dispatch } from 'redux';
+import { fetchPokemonsRequest } from '../../redux/Pokemons/actions';
 
 const HomeWithFetchPokeAPI = withFetchPokeAPI<Props>(
   props => `/pokemon?page=${props.match.params.page}`,
@@ -20,4 +22,16 @@ const mapStateToProps = (state: RootState, ownProps: Props) => {
   return { page, pokemons: getPokemonsFromState(state, page) };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    // dispatching plain actions
+    fetchPokemons: () => {
+      dispatch(fetchPokemonsRequest({ pokemons: [] }));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);

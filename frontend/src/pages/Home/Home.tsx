@@ -6,6 +6,7 @@ import Style from './Home.style';
 import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { pokemonType } from '../../HOC/with-fetch-poke-api';
+import { Dispatch } from 'redux';
 
 interface RouteParams {
   page: string;
@@ -13,11 +14,14 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemons: pokemonType[];
+  fetchPokemons: () => any;
 }
 
 const Home = (props: Props) => {
   // if no page argument is passed, display first page
   const currentPage = parseInt(props.match.params.page, 10) || 1;
+
+  useEffect(() => props.fetchPokemons(), []);
 
   return (
     <div>
