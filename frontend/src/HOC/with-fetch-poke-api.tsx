@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { makeGetRequest } from 'services/networking/request';
 import loader from './../assets/loader.svg';
-import { RouteComponentProps } from 'react-router';
 
 export interface PokemonData {
   id: number;
@@ -18,7 +17,7 @@ const withFetchPokeAPI = <T extends object>(
   dataName: string,
   shouldReloadEffect: (props: T) => any[],
 ) => (BaseComponent: React.ComponentType<T>) => (props: T) => {
-  const [data, setData] = useState<{ [key: string]: PokemonData[] }>({});
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(

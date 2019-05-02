@@ -1,1 +1,1 @@
-export { default } from './PokemonPage';
+export { default } from './PokemonPage.wrap';

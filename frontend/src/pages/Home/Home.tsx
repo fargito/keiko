@@ -5,7 +5,7 @@ import Pokemon from 'components/Pokemon';
 import Style from './Home.style';
 import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import withFetchPokeAPI, { PokemonData } from '../../HOC/with-fetch-poke-api';
+import { PokemonData } from '../../HOC/with-fetch-poke-api';
 
 interface RouteParams {
   page: string;
