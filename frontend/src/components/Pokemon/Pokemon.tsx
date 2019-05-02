@@ -3,7 +3,7 @@ import * as React from 'react';
 import Style from './Pokemon.style';
 import { useState } from 'react';
 
-import rotateIcon from './../../assets/turn-ico.svg';
+import rotateIcon from './turn-ico.svg';
 
 // declare interface to type props
 interface Props {
@@ -34,7 +34,7 @@ const Pokemon = (props: Props) => {
             onClick={() => setViewedBack(!viewedBack)}
           />
         </Style.Header>
-        <img src={(viewedBack ? apiImgBackUrl : apiImgUrl) + props.id + '.png'} alt={props.name} />
+        <img src={`${viewedBack ? apiImgBackUrl : apiImgUrl}${props.id}.png`} alt={props.name} />
         <p>Id: {props.id}</p>
         <p>Weight: {props.weight} kg</p>
         <p>Height: {props.height} cm</p>

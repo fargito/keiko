@@ -136,14 +136,3 @@ input {
   border: none;
   outline: none;
 }
-
-@font-face {
-  font-family: 'Pokemon_GB';
-  font-weight: 'normal';
-  src: url('/Pokemon_GB.ttf') format('truetype');
-}
-
-p,
-div {
-  font-family: 'Pokemon_GB';
-}
