@@ -5,14 +5,14 @@ import Pokemon from 'components/Pokemon';
 import Style from './Home.style';
 import { useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { PokemonData } from '../../HOC/with-fetch-poke-api';
+import { pokemonType } from '../../HOC/with-fetch-poke-api';
 
 interface RouteParams {
   page: string;
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
-  pokemons: PokemonData[];
+  pokemons: pokemonType[];
 }
 
 const Home = (props: Props) => {
@@ -36,7 +36,7 @@ const Home = (props: Props) => {
         </Style.PageIterator>
       </Style.Intro>
       <Style.PokemonsContainer>
-        {props.pokemons.map((value: PokemonData) => (
+        {props.pokemons.map((value: pokemonType) => (
           <Pokemon
             key={value.id}
             name={value.name}

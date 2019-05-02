@@ -3,7 +3,7 @@ import * as React from 'react';
 import Pokemon from 'components/Pokemon';
 import { RouteComponentProps } from 'react-router';
 
-import { PokemonData } from '../../HOC/with-fetch-poke-api';
+import { pokemonType } from '../../HOC/with-fetch-poke-api';
 
 import Style from './PokemonPage.style';
 
@@ -12,7 +12,7 @@ interface RouteParams {
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
-  pokemon: PokemonData;
+  pokemon: pokemonType;
 }
 
 const PokemonPage = (props: Props) => {
