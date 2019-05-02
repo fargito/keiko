@@ -26,7 +26,6 @@ const Root: React.FunctionComponent<Props> = ({ children }) => (
       <Style.Header>
         <Style.HeaderWrapper>
           <Link to="/">
-            {' '}
             <Style.Logo
               src="https://fontmeme.com/permalink/190314/03655fc9c0c5ef371245622978eaa0a7.png"
               alt="pokemon-go-font"

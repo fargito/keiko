@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default {
   Intro: styled.div`
@@ -16,10 +17,10 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
   `,
-  PageIterator: styled.div`
+  PageIterator: styled(Link)`
+    text-decoration: none;
+    color: inherit;
     font-size: 10px;
-    :hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
   `,
 };

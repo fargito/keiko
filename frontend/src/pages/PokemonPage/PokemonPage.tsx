@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { makeGetRequest } from 'services/networking/request';
 
 import Style from './PokemonPage.style';
+import loader from './../../assets/loader.svg';
 
 interface RouteParams {
   id: string;
@@ -29,18 +30,17 @@ class PokemonPage extends React.Component<Props> {
     error: '',
   };
   componentDidMount() {
-    makeGetRequest('/pokemon/' + String(this.state.id))
+    makeGetRequest(`/pokemon/${this.state.id}`)
       .then(data => {
-        const pokemon_data = JSON.parse(data['text']);
+        const pokemonData = data.body;
         this.setState({
-          name: pokemon_data['name'],
-          weight: pokemon_data['weight'],
-          height: pokemon_data['height'],
+          name: pokemonData['name'],
+          weight: pokemonData['weight'],
+          height: pokemonData['height'],
           loading: false,
         });
       })
       .catch(error => {
-        console.log(error);
         this.setState({ error: 'Unable to call poke API: ' + error.toString(), loading: false });
       });
   }
@@ -50,7 +50,8 @@ class PokemonPage extends React.Component<Props> {
       <Style.Intro>
         <div>
           {this.state.loading ? (
-            <img src={process.env.PUBLIC_URL + '/loader.svg'} alt="loading..." />
+            <img src={loader} alt="loading..." />
+
           ) : this.state.error ? (
             <div>{this.state.error}</div>
           ) : (
