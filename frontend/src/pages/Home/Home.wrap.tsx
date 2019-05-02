@@ -2,7 +2,6 @@ import Home, { Props } from './Home';
 import withFetchPokeAPI from '../../HOC/with-fetch-poke-api';
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
-import { PokemonsState } from 'redux/Pokemons';
 import { Dispatch } from 'redux';
 import { fetchPokemonsRequest } from '../../redux/Pokemons/actions';
 

@@ -3,10 +3,9 @@ import * as React from 'react';
 import Pokemon from 'components/Pokemon';
 
 import Style from './Home.style';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { pokemonType } from '../../HOC/with-fetch-poke-api';
-import { Dispatch } from 'redux';
+import { pokemonType } from 'redux/Pokemons/types';
 
 interface RouteParams {
   page: string;

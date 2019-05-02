@@ -1,8 +1,7 @@
 import { ActionType, getType } from 'typesafe-actions';
 
 import { AnyAction } from 'redux';
-
-import { pokemonType } from '../../HOC/with-fetch-poke-api';
+import { pokemonType } from './types';
 
 export type PokemonsState = Readonly<Record<string, pokemonType>>;
 

@@ -3,9 +3,8 @@ import * as React from 'react';
 import Pokemon from 'components/Pokemon';
 import { RouteComponentProps } from 'react-router';
 
-import { pokemonType } from '../../HOC/with-fetch-poke-api';
-
 import Style from './PokemonPage.style';
+import { pokemonType } from 'redux/Pokemons/types';
 
 interface RouteParams {
   id: string;

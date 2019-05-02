@@ -4,13 +4,6 @@ import { makeGetRequest } from 'services/networking/request';
 import Loader from 'components/Loader';
 import ErrorDisplayer from 'components/ErrorDisplayer';
 
-export interface pokemonType {
-  id: number;
-  name: string;
-  height: number;
-  weight: number;
-}
-
 // High order component logic for retrieving data from the pokeAPI
 const withFetchPokeAPI = <Props extends object>(
   // using functions passed by child in order to get the endpoint and the reload effect
