@@ -2,9 +2,9 @@ import { ActionType, getType } from 'typesafe-actions';
 
 import { AnyAction } from 'redux';
 import { pokemonType } from './types';
-import { fetchPokemonsSuccess } from './actions';
+import { fetchPokemonsSuccess, fetchPokemonSuccess } from './actions';
 
-export type PokemonsAction = ActionType<typeof fetchPokemonsSuccess>;
+export type PokemonsAction = ActionType<typeof fetchPokemonsSuccess | typeof fetchPokemonSuccess>;
 
 export type PokemonsState = Readonly<Record<string, pokemonType>>;
 
@@ -15,6 +15,10 @@ const reducer = (state: PokemonsState = initialState, action: AnyAction) => {
   switch (typedAction.type) {
     case getType(fetchPokemonsSuccess):
       return typedAction.payload.pokemons;
+    case getType(fetchPokemonSuccess):
+      const newState = { ...state };
+      newState[typedAction.payload.pokemon.id] = typedAction.payload.pokemon;
+      return newState;
     default:
       return state;
   }
