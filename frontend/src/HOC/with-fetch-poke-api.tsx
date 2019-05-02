@@ -14,7 +14,7 @@ export interface PokemonData {
 // High order component logic for retrieving data from the pokeAPI
 const withFetchPokeAPI = <Props extends object>(
   // using functions passed by child in order to get the endpoint and the reload effect
-  endpoint: (props: Props) => string,
+  getEndpoint: (props: Props) => string,
   dataName: string,
   shouldReloadEffect: (props: Props) => any[],
 ) => (BaseComponent: React.ComponentType<Props>) => (props: Props) => {
@@ -25,7 +25,7 @@ const withFetchPokeAPI = <Props extends object>(
   useEffect(
     () => {
       setLoading(true);
-      makeGetRequest(endpoint(props))
+      makeGetRequest(getEndpoint(props))
         .then(result => {
           setData({ [dataName]: result.body });
           setLoading(false);

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { string } from 'prop-types';
 
 interface ErrorProps {
   error: string;
