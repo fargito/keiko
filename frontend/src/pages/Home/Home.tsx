@@ -17,7 +17,7 @@ export interface Props extends RouteComponentProps<RouteParams> {
 
 const Home = (props: Props) => {
   // if no page argument is passed, display first page
-  const currentPage = parseInt(props.match.params.page) || 1;
+  const currentPage = parseInt(props.match.params.page, 10) || 1;
 
   return (
     <div>
