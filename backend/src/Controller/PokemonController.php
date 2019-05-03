@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PokemonController
 {
@@ -12,10 +14,17 @@ class PokemonController
      *     "/pokemon",
      * )
      */
-    public function hello_world()
+    public function helloWorld(NormalizerInterface $normalizer)
     {
-        return new Response(
-            '<html><body>Hello world</body></html>'
+        $this->normalizer = $normalizer;
+        $hardCodedPokemon = [
+            'id'=> 1,
+            'name'=> "bulbasaur",
+            'height'=> 15,
+            'weight'=> 225,
+            ];
+        return new JsonResponse(
+            $hardCodedPokemon
         );
     }
 }
