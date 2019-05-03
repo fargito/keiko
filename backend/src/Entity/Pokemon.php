@@ -5,11 +5,11 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ApiResource
- * @ORM\Table(name="pokemon")
- * @ORM\Entity()
- */
+// /**
+//  * @ApiResource
+//  * @ORM\Table(name="pokemon")
+//  * @ORM\Entity()
+//  */
 class Pokemon
 {
     /**
