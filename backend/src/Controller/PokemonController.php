@@ -10,9 +10,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class PokemonController
 {
     /**
-     * @Route(
-     *     "/pokemon",
-     * )
+     * @Route("/pokemon", methods={"GET", "HEAD"})
      */
     public function helloWorld(NormalizerInterface $normalizer)
     {
@@ -26,5 +24,12 @@ class PokemonController
         return new JsonResponse(
             $hardCodedPokemon
         );
+    }
+    /**
+     * @Route("/pokemon", methods={"POST",})
+     */
+    public function helloWorld2(NormalizerInterface $normalizer)
+    {
+        return new Response("Hello pop");
     }
 }
