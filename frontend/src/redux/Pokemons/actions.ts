@@ -1,18 +1,15 @@
 import { createStandardAction } from 'typesafe-actions';
-import { PokemonsState } from './reducer';
+import { pokemonType } from './types';
 
-export const fetchPokemonsRequest = createStandardAction('Pokemons/FETCH_POKEMONS_REQUEST')<{
-  pokemons: PokemonsState[];
+export const fetchPokemonsListSuccess = createStandardAction(
+  'Pokemons/FETCH_POKEMONS_LIST_SUCCESS',
+)<{
+  pokemons: {};
 }>();
-export const fetchPokemonsSuccess = createStandardAction('Pokemons/FETCH_POKEMONS_SUCCESS')<{
-  pokemons: PokemonsState[];
-}>();
-export const fetchPokemonsError = createStandardAction('Pokemons/FETCH_POKEMONS_ERROR')<{
-  errorMessage: string;
+export const fetchPokemonSuccess = createStandardAction('Pokemons/FETCH_POKEMON_SUCCESS')<{
+  pokemon: pokemonType;
 }>();
 
 export default {
-  fetchPokemonsRequest,
-  fetchPokemonsSuccess,
-  fetchPokemonsError,
+  fetchPokemonsListSuccess,
 };

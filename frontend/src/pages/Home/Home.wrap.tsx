@@ -3,9 +3,10 @@ import withFetchPokeAPI, { WithFetchAPIType } from '../../HOC/with-fetch-poke-ap
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
 import { Dispatch } from 'redux';
-import { fetchPokemonsSuccess } from '../../redux/Pokemons/actions';
+import { fetchPokemonsListSuccess } from '../../redux/Pokemons/actions';
 import { pokemonType } from 'redux/Pokemons/types';
 import { getPokemonsListFromState } from 'redux/Pokemons/selectors';
+import { normalize } from 'services/Pokemons/PokemonsNormalizer';
 
 const HomeWithFetchPokeAPI = withFetchPokeAPI<Props & WithFetchAPIType>(
   props => `/pokemon?page=${props.match.params.page}`,
@@ -15,14 +16,14 @@ const HomeWithFetchPokeAPI = withFetchPokeAPI<Props & WithFetchAPIType>(
 
 const mapStateToProps = (state: RootState, ownProps: Props) => {
   const { page } = ownProps.match.params;
-  return { page, pokemons: getPokemonsListFromState(state, page) };
+  return { pokemons: getPokemonsListFromState(state, page) };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     // dispatching plain actions
-    fetchPokemonsSuccess: (pokemons: pokemonType[]) => {
-      dispatch(fetchPokemonsSuccess({ pokemons: [] }));
+    fetchPokemonsListSuccess: (pokemons: pokemonType[]) => {
+      dispatch(fetchPokemonsListSuccess({ pokemons: normalize(pokemons) }));
     },
   };
 };
