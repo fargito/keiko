@@ -1,4 +1,4 @@
-import { fetchPokemonsSuccess, fetchPokemonSuccess } from '../actions';
+import { fetchPokemonsListSuccess, fetchPokemonSuccess } from '../actions';
 import reducer from '../reducer';
 
 const initialState = {};
@@ -14,9 +14,9 @@ const fetchedPokemons = {
 };
 
 describe('Pokemons reducer', () => {
-  describe('FETCH_POKEMONS_SUCCESS case', () => {
+  describe('FETCH_POKEMONS_LIST_SUCCESS case', () => {
     it('Should add the pokemons from the action to the state', () => {
-      const action = fetchPokemonsSuccess({
+      const action = fetchPokemonsListSuccess({
         pokemons: fetchedPokemons,
       });
       const expectedState = fetchedPokemons;
@@ -27,9 +27,9 @@ describe('Pokemons reducer', () => {
     it('Should add one pokemon from the action to the state', () => {
       const pokemonID = 91;
       const action = fetchPokemonSuccess({
-        pokemon: fetchedPokemons[91],
+        pokemon: fetchedPokemons[pokemonID],
       });
-      const expectedState = { 91: fetchedPokemons[91] };
+      const expectedState = { [pokemonID]: fetchedPokemons[pokemonID] };
       expect(reducer(initialState, action)).toEqual(expectedState);
     });
   });

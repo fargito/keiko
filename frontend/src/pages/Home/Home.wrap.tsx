@@ -3,7 +3,7 @@ import withFetchPokeAPI, { WithFetchAPIType } from '../../HOC/with-fetch-poke-ap
 import { connect } from 'react-redux';
 import { RootState } from 'redux/types';
 import { Dispatch } from 'redux';
-import { fetchPokemonsSuccess } from '../../redux/Pokemons/actions';
+import { fetchPokemonsListSuccess } from '../../redux/Pokemons/actions';
 import { pokemonType } from 'redux/Pokemons/types';
 import { getPokemonsListFromState } from 'redux/Pokemons/selectors';
 import { normalize } from 'services/Pokemons/PokemonsNormalizer';
@@ -22,8 +22,8 @@ const mapStateToProps = (state: RootState, ownProps: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     // dispatching plain actions
-    fetchPokemonsSuccess: (pokemons: pokemonType[]) => {
-      dispatch(fetchPokemonsSuccess({ pokemons: normalize(pokemons) }));
+    fetchPokemonsListSuccess: (pokemons: pokemonType[]) => {
+      dispatch(fetchPokemonsListSuccess({ pokemons: normalize(pokemons) }));
     },
   };
 };

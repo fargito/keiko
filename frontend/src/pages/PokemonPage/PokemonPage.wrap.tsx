@@ -21,7 +21,7 @@ const mapStateToProps = (state: RootState, ownProps: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     // dispatching plain actions
-    fetchPokemonsSuccess: (pokemon: pokemonType) => {
+    fetchPokemonsListSuccess: (pokemon: pokemonType) => {
       dispatch(fetchPokemonSuccess({ pokemon }));
     },
   };
