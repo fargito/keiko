@@ -18,6 +18,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PokemonController extends AbstractController
 {
+
+    protected $normalizer;
+    protected $entityManager;
+    protected $serializer;
+
     public function __construct(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
     {
         $this->normalizer = $normalizer;
@@ -28,10 +33,7 @@ class PokemonController extends AbstractController
 
     /**
      * @Route("/pokemon", methods={"GET", "HEAD"})
-     * @param NormalizerInterface $normalizer
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return JsonResponse
+     * @return Response
      */
     public function getAllPokemons()
     {
@@ -44,6 +46,7 @@ class PokemonController extends AbstractController
     }
     /**
      * @Route("/pokemon", methods={"POST",})
+     * @return Response
      */
     public function createPokemon()
     {
@@ -62,10 +65,7 @@ class PokemonController extends AbstractController
     }
     /**
      * @Route("/pokemon/{pokemonId}", methods={"GET", "HEAD"})
-     * @param NormalizerInterface $normalizer
-     * @param EntityManagerInterface $entityManager
-     *
-     * @return JsonResponse
+     * @return Response
      */
     public function getSinglePokemon($pokemonId)
     {
