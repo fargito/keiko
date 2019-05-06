@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 use Doctrine\ORM\EntityManagerInterface;
 
 
@@ -21,7 +25,7 @@ class PokemonController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function getElements(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    public function getAllPokemons(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
     {
         $this->normalizer = $normalizer;
         $this->entityManager = $entityManager;
@@ -29,25 +33,15 @@ class PokemonController extends AbstractController
         # get all the pokemons from the database
         $pokemons = $this->getDoctrine()->getRepository(Pokemon::class)->findAll();
 
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $jsonResponse = $serializer->serialize($pokemons, 'json');
 
-
-        $pokemonsResponse = array_map(function ($pokemon){
-            return [
-                'id' => $pokemon->getId(),
-                'name' => $pokemon->getName(),
-                'height' => $pokemon->getHeight(),
-                'weight' => $pokemon->getWeight(),
-            ];
-        }, $pokemons);
-
-        return new JsonResponse(
-            $pokemonsResponse
-        );
+        return new Response($jsonResponse);
     }
     /**
      * @Route("/pokemon", methods={"POST",})
      */
-    public function create(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    public function createPokemon(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
     {
         #$entityManager = $this->getDoctrine()->getManager();
 
@@ -61,5 +55,25 @@ class PokemonController extends AbstractController
         $entityManager->flush();
 
         return new Response("Hello from create");
+    }
+    /**
+     * @Route("/pokemon/{pokemonId}", methods={"GET", "HEAD"})
+     * @param NormalizerInterface $normalizer
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return JsonResponse
+     */
+    public function getSinglePokemon($pokemonId, NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    {
+        $pokemon = $this->getDoctrine()->getRepository(Pokemon::class)->find($pokemonId);
+
+        # return empty response if no pokemon is found
+        if (!$pokemon) return new JsonResponse();
+
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $jsonResponse = $serializer->serialize($pokemon, 'json');
+
+
+        return new Response($jsonResponse);
     }
 }
