@@ -18,6 +18,14 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PokemonController extends AbstractController
 {
+    public function __construct(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    {
+        $this->normalizer = $normalizer;
+        $this->entityManager = $entityManager;
+        $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+
+    }
+
     /**
      * @Route("/pokemon", methods={"GET", "HEAD"})
      * @param NormalizerInterface $normalizer
@@ -25,34 +33,30 @@ class PokemonController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function getAllPokemons(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    public function getAllPokemons()
     {
-        $this->normalizer = $normalizer;
-        $this->entityManager = $entityManager;
-
         # get all the pokemons from the database
         $pokemons = $this->getDoctrine()->getRepository(Pokemon::class)->findAll();
 
-        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
-        $jsonResponse = $serializer->serialize($pokemons, 'json');
+        $jsonResponse = $this->serializer->serialize($pokemons, 'json');
 
         return new Response($jsonResponse);
     }
     /**
      * @Route("/pokemon", methods={"POST",})
      */
-    public function createPokemon(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    public function createPokemon()
     {
         #$entityManager = $this->getDoctrine()->getManager();
 
 
         $pokemon = new Pokemon();
-        $pokemon->setName("blob2");
+        $pokemon->setName("blob3");
         $pokemon->setHeight(12);
         $pokemon->setWeight(15);
 
-        $entityManager->persist($pokemon);
-        $entityManager->flush();
+        $this->entityManager->persist($pokemon);
+        $this->entityManager->flush();
 
         return new Response("Hello from create");
     }
@@ -63,16 +67,14 @@ class PokemonController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function getSinglePokemon($pokemonId, NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
+    public function getSinglePokemon($pokemonId)
     {
         $pokemon = $this->getDoctrine()->getRepository(Pokemon::class)->find($pokemonId);
 
         # return empty response if no pokemon is found
         if (!$pokemon) return new JsonResponse();
 
-        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
-        $jsonResponse = $serializer->serialize($pokemon, 'json');
-
+        $jsonResponse = $this->serializer->serialize($pokemon, 'json');
 
         return new Response($jsonResponse);
     }
