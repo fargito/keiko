@@ -2,34 +2,64 @@
 // src/Controller/PokemonController.php
 namespace App\Controller;
 
+use App\Entity\Pokemon;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-class PokemonController
+
+class PokemonController extends AbstractController
 {
     /**
      * @Route("/pokemon", methods={"GET", "HEAD"})
+     * @param NormalizerInterface $normalizer
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return JsonResponse
      */
-    public function helloWorld(NormalizerInterface $normalizer)
+    public function getElements(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
     {
         $this->normalizer = $normalizer;
-        $hardCodedPokemon = [
-            'id'=> 1,
-            'name'=> "bulbasaur",
-            'height'=> 15,
-            'weight'=> 225,
+        $this->entityManager = $entityManager;
+
+        # get all the pokemons from the database
+        $pokemons = $this->getDoctrine()->getRepository(Pokemon::class)->findAll();
+
+
+
+        $pokemonsResponse = array_map(function ($pokemon){
+            return [
+                'id' => $pokemon->getId(),
+                'name' => $pokemon->getName(),
+                'height' => $pokemon->getHeight(),
+                'weight' => $pokemon->getWeight(),
             ];
+        }, $pokemons);
+
         return new JsonResponse(
-            $hardCodedPokemon
+            $pokemonsResponse
         );
     }
     /**
      * @Route("/pokemon", methods={"POST",})
      */
-    public function helloWorld2(NormalizerInterface $normalizer)
+    public function create(NormalizerInterface $normalizer, EntityManagerInterface $entityManager)
     {
-        return new Response("Hello pop");
+        #$entityManager = $this->getDoctrine()->getManager();
+
+
+        $pokemon = new Pokemon();
+        $pokemon->setName("blob2");
+        $pokemon->setHeight(12);
+        $pokemon->setWeight(15);
+
+        $entityManager->persist($pokemon);
+        $entityManager->flush();
+
+        return new Response("Hello from create");
     }
 }
