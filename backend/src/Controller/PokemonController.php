@@ -6,6 +6,7 @@ use App\Entity\Pokemon;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -44,25 +45,25 @@ class PokemonController extends AbstractController
 
         return new Response($jsonResponse);
     }
+
     /**
-     * @Route("/pokemon", methods={"POST",})
+     * @Route("/pokemon", methods={"POST"})
+     * @param Request $request
      * @return Response
      */
-    public function createPokemon()
+    public function createPokemon(Request $request)
     {
-        #$entityManager = $this->getDoctrine()->getManager();
 
-
-        $pokemon = new Pokemon();
-        $pokemon->setName("blob3");
-        $pokemon->setHeight(12);
-        $pokemon->setWeight(15);
+        $pokemon = $this->serializer->deserialize($request->getContent(), Pokemon::class, 'json');
 
         $this->entityManager->persist($pokemon);
         $this->entityManager->flush();
 
-        return new Response("Hello from create");
+        $jsonResponse = $this->serializer->serialize($pokemon, 'json');
+
+        return new Response($jsonResponse);
     }
+
     /**
      * @Route("/pokemon/{pokemonId}", methods={"GET", "HEAD"})
      * @return Response
